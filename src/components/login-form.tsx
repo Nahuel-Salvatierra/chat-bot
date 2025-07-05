@@ -13,26 +13,29 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useLogin from "@/app/hooks/useLogin";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import SpanError from "./span-error";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const { submit, loading, register } = useLogin();
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await submit();
-      toast.success("Logged in successfully");
-      redirect("/chat");
-    } catch (error) {
-      console.error(error);
-      toast.error("Error logging in");
-    }
+  const onSuccess = () => {
+    toast.success("Logged in successfully");
+    router.push("/chat");
   };
+
+  const onError = () => {
+    toast.error("Error logging in");
+  };
+
+  const { submit, loading, registerForm, validationErrors } = useLogin({
+    onSuccess,
+    onError,
+  });
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -44,7 +47,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={submit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
@@ -53,8 +56,9 @@ export function LoginForm({
                   type="email"
                   placeholder="m@example.com"
                   required
-                  {...register("email")}
+                  {...registerForm("email")}
                 />
+                <SpanError error={validationErrors.email?.message} />
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center">
@@ -70,8 +74,9 @@ export function LoginForm({
                   id="password"
                   type="password"
                   required
-                  {...register("password")}
+                  {...registerForm("password")}
                 />
+                <SpanError error={validationErrors.password?.message} />
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full" loading={loading}>

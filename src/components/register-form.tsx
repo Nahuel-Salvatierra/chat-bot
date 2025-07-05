@@ -13,12 +13,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useRegister from "@/app/hooks/useRegister";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import SpanError from "./span-error";
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const { submit, loading, register } = useRegister();
+  const router = useRouter();
+  const onSuccess = () => {
+    toast.success("Registration successful");
+    router.push("/auth/login");
+  };
+  const onError = () => {
+    toast.error("Registration failed");
+  };
+
+  const { submit, loading, registerForm, validationErrors } = useRegister({
+    onSuccess,
+    onError,
+  });
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -39,8 +54,9 @@ export function RegisterForm({
                   type="email"
                   placeholder="m@example.com"
                   required
-                  {...register("email")}
+                  {...registerForm("email")}
                 />
+                <SpanError error={validationErrors.email?.message} />
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center">
@@ -56,8 +72,9 @@ export function RegisterForm({
                   id="password"
                   type="password"
                   required
-                  {...register("password")}
+                  {...registerForm("password")}
                 />
+                <SpanError error={validationErrors.password?.message} />
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full" loading={loading}>
