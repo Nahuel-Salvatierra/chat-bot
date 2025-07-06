@@ -1,0 +1,19 @@
+export const env = {
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+  api: {
+    baseUrl: process.env.API_BASE_URL || "http://localhost:2121/api/v1",
+  },
+  firebaseConfig: {
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  },
+};
+
+export const serverEnv = {
+  apiBaseUrl: process.env.API_BASE_URL || "http://localhost:2121/api/v1",
+  nodeEnv: process.env.NODE_ENV || "development",
+};
