@@ -1,7 +1,7 @@
 "use client";
 
-import { useUserStore } from "@/store/user-store";
-import { useAuth } from "./useAuth";
+import { useUserStore } from "@/app/store/user-store";
+import { useAuth } from "./use-auth";
 import { toast } from "react-toastify";
 import { useState } from "react";
 

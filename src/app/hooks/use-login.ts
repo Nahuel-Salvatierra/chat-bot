@@ -2,8 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "@/app/validations/loginSchema";
-import { useAuth } from "./useAuth";
+import { loginSchema } from "@/app/validations/login-schema";
+import { useAuth } from "./use-auth";
 import { useState } from "react";
 
 export default function useLogin({

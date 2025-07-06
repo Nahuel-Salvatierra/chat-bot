@@ -3,7 +3,7 @@
 import { useUserStore } from "@/app/store/user-store";
 import { useCallback, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { app } from "@/services/firebase/configuration";
+import { app } from "@/services/firebase/firebase-config";
 
 export default function useOnLoad() {
   const [loading, setLoading] = useState(true);

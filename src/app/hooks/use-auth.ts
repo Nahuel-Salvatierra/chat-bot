@@ -1,39 +1,7 @@
 "use client";
 
-import { useUserStore } from "@/store/user-store";
-import { FirebaseAuth } from "@/services/firebase/auth-firebase";
-import { IUser } from "@/domain/user";
-
-export type Login = {
-  email: string;
-  password: string;
-};
-
-export type Register = Login;
-
-export interface IAuth {
-  register: (data: Register) => Promise<IUser>;
-  login: (data: Login) => Promise<IUser>;
-  logout: () => Promise<void>;
-}
-
-export const getAuth = () => {
-  return new FirebaseAuth();
-};
-
-class Auth {
-  static async login(data: Login) {
-    return getAuth().login(data);
-  }
-
-  static async register(data: Register) {
-    return getAuth().register(data);
-  }
-
-  static async logout() {
-    return getAuth().logout();
-  }
-}
+import { Auth, Login, Register } from "@/domain/auth";
+import { useUserStore } from "@/app/store/user-store";
 
 export const useAuth = () => {
   const setUser = useUserStore((state) => state.setUser);
@@ -47,8 +15,6 @@ export const useAuth = () => {
     try {
       const user = await Auth.login(data);
       setUser({
-        id: user.email,
-        username: user.email,
         email: user.email,
       });
     } catch (error) {
@@ -67,8 +33,6 @@ export const useAuth = () => {
     try {
       const user = await Auth.register(data);
       setUser({
-        id: user.email,
-        username: user.email,
         email: user.email,
       });
       return user;
