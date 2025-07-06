@@ -2,9 +2,6 @@
 
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider, useTheme } from "next-themes";
-import { getAuth } from "./hooks/useAuth";
-
-getAuth();
 
 export default function App({
   children,
