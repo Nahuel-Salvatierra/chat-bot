@@ -1,25 +1,25 @@
 "use client";
 
-import { useUserStore } from "@/store/user-store";
+import { useUserStore } from "@/app/store/user-store";
+import LoaderScreen from "@/components/loader-screen";
+import useOnLoad from "../hooks/use-on-load";
 
 export default function ProtectedGuard({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { loading: loadingOnLoad } = useOnLoad();
   const user = useUserStore((state) => state.user);
   const loading = useUserStore((state) => state.loading);
-  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
 
-  console.log(user, loading, isAuthenticated);
-
-  if (loading) {
-    return <div>Loading...</div>;
+  if (loading || loadingOnLoad) {
+    return <LoaderScreen />;
   }
 
-  if (!isAuthenticated || !user) {
+  if (!user) {
     return <div>Unauthorized</div>;
+  } else {
+    return <>{children}</>;
   }
-
-  return <>{children}</>;
 }
