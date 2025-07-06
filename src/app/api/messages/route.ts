@@ -1,4 +1,4 @@
-import { MessageService } from "@/services/api/message.service";
+import { messageService } from "@/services/api/message-service";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -7,6 +7,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const messages = await MessageService.getMessages(token);
+  const messages = await messageService.getMessages(token);
   return NextResponse.json(messages);
 }
