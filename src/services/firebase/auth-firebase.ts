@@ -3,9 +3,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "./configuration";
+import { auth } from "./firebase-config";
 import { Auth } from "firebase/auth";
-import { IAuth, Login, Register } from "@/app/hooks/useAuth";
+import { IAuth, Login, Register } from "@/domain/auth";
 import { User } from "@/domain/user";
 
 export class FirebaseAuth implements IAuth {
@@ -37,7 +37,6 @@ export class FirebaseAuth implements IAuth {
         data.email,
         data.password
       );
-      console.log(userCredential);
 
       if (!userCredential.user.email) throw new Error("User email not found");
       return new User(userCredential.user.email);
@@ -57,5 +56,19 @@ export class FirebaseAuth implements IAuth {
     } catch (error) {
       throw error;
     }
+  }
+
+  async getToken() {
+    if (!auth) {
+      throw new Error("Firebase Auth not initialized");
+    }
+    return auth.currentUser?.getIdToken();
+  }
+
+  async getAuthUser() {
+    if (!auth) {
+      throw new Error("Firebase Auth not initialized");
+    }
+    return auth.currentUser ? new User(auth.currentUser.email as string) : null;
   }
 }

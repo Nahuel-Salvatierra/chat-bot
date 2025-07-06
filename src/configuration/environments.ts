@@ -1,7 +1,7 @@
 export const env = {
-  baseUrl: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   api: {
-    baseUrl: process.env.API_BASE_URL || "http://localhost:2121/api/v1",
+    baseUrl: process.env.API_BASE_URL,
   },
   firebaseConfig: {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,6 +14,6 @@ export const env = {
 };
 
 export const serverEnv = {
-  apiBaseUrl: process.env.API_BASE_URL || "http://localhost:2121/api/v1",
-  nodeEnv: process.env.NODE_ENV || "development",
+  apiBaseUrl: process.env.API_BASE_URL,
+  nodeEnv: process.env.NODE_ENV,
 };
