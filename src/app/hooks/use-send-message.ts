@@ -36,6 +36,7 @@ export default function useSendMessage({
       new Date(),
       "loading"
     );
+    reset();
     const token = await Auth.getToken();
 
     setLoading(true);
@@ -47,7 +48,6 @@ export default function useSendMessage({
 
       updateOne({ ...newMessage, status: "success" });
       onSuccess?.(response);
-      reset();
 
       return response;
     } catch (error) {
