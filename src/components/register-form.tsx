@@ -16,6 +16,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import SpanError from "./span-error";
+import useLogin from "@/app/hooks/use-login";
 
 export function RegisterForm({
   className,
@@ -29,6 +30,16 @@ export function RegisterForm({
   const onError = () => {
     toast.error("Registration failed");
   };
+
+  const { googleLogin } = useLogin({
+    onSuccess: () => {
+      toast.success("Login successful");
+      router.push("/chat");
+    },
+    onError: () => {
+      toast.error("Registration failed");
+    },
+  });
 
   const { submit, loading, registerForm, validationErrors } = useRegister({
     onSuccess,
@@ -59,15 +70,7 @@ export function RegisterForm({
                 <SpanError error={validationErrors.email?.message} />
               </div>
               <div className="grid gap-3">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -80,7 +83,13 @@ export function RegisterForm({
                 <Button type="submit" className="w-full" loading={loading}>
                   Register
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button
+                  type="button"
+                  disabled={loading}
+                  variant="outline"
+                  className="w-full"
+                  onClick={googleLogin}
+                >
                   Login with Google
                 </Button>
               </div>
