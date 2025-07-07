@@ -1,36 +1,144 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chat App - Documentación
 
-## Getting Started
+## 📋 Descripción
 
-First, run the development server:
+Chat App es una aplicación de chat en tiempo real construida con Next.js 15, TypeScript, Firebase y Zustand. Permite a los usuarios autenticarse y enviar mensajes con un asistente de IA.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🖼️ Capturas de Pantalla
+
+<div align="center">
+  <img src="screenshots/login_browser.png" alt="Login Screen" height="200" />
+  <img src="screenshots/chat_browser.png" alt="Chat Interface" height="200" />
+  <img src="screenshots/login_mobile.png" alt="Register Screen" width="200" />
+  <img src="screenshots/chat_mobile.png" alt="Mobile View" width="200" />
+</div>
+
+## 🏗️ Arquitectura
+
+### Stack Tecnológico
+- **Frontend**: Next.js 15 + React 19 + TypeScript
+- **Estado**: Zustand
+- **Autenticación**: Firebase Auth
+- **Formularios**: React Hook Form + Yup
+- **UI**: Tailwind CSS + Radix UI
+- **Notificaciones**: React Toastify
+- **Iconos**: Lucide React
+
+### Patrón de Arquitectura
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Components    │    │      Hooks      │    │      Store      │
+│   (UI Layer)    │◄──►│  (Logic Layer)  │◄──►│  (State Layer)  │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│    Services     │    │     Domain      │    │   Configuration │
+│  (API Layer)    │    │   (Models)      │    │   (Env/Config)  │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Estructura del Proyecto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── app/                          # App Router (Next.js 15)
+│   ├── (protected)/              # Rutas protegidas
+│   │   └── chat/                 # Página del chat
+│   ├── auth/                     # Rutas de autenticación
+│   │   ├── login/                # Página de login
+│   │   └── register/             # Página de registro
+│   ├── api/                      # API Routes
+│   │   └── messages/             # Endpoint de mensajes
+│   ├── actions/                  # Server Actions
+│   ├── hooks/                    # Custom Hooks
+│   ├── store/                    # Estado global (Zustand)
+│   ├── validations/              # Esquemas de validación
+│   └── util/                     # Utilidades del servidor
+├── components/                   # Componentes React
+│   ├── ui/                       # Componentes base (Radix UI)
+│   └── [componentes específicos] # Componentes de la app
+├── configuration/                # Configuración
+│   └── environments.ts           # Variables de entorno
+├── domain/                       # Modelos de dominio
+├── lib/                          # Utilidades compartidas
+└── services/                     # Servicios externos
+    ├── api/                      # Servicios de API
+    └── firebase/                 # Configuración Firebase
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📝 Convenciones de Nomenclatura
 
-## Learn More
+### Archivos y Carpetas
 
-To learn more about Next.js, take a look at the following resources:
+#### Componentes React
+```typescript
+// ✅ Kebab-case para archivos
+login-form.tsx
+message-form.tsx
+user-message.tsx
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+// ✅ PascalCase para componentes
+export function LoginForm() { }
+export default function MessageForm() { }
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+// ✅ CamelCase para funciones
+export default function useLogin() { }
+export const useSendMessage = () => { }
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+// ✅ CamelCase para hooks
+export const useMessageStore = create<MessageStore>()
+export const useUserStore = create<UserStore>()
+```
+
+### Variables y Funciones
+
+#### Variables
+```typescript
+// ✅ camelCase para variables
+const userName = "John";
+const isAuthenticated = true;
+const messageList = [];
+
+
+## 🔧 Configuración
+
+bash
+# Desarrollo
+npm run dev          # Inicia servidor de desarrollo con Turbopack
+
+# Producción
+npm run build        # Construye la aplicación
+npm run start        # Inicia servidor de producción
+
+# Linting
+npm run lint         # Ejecuta ESLint
+```
+
+## 📦 Dependencias Principales
+
+### Producción
+- **Next.js 15**: Framework React con App Router
+- **TypeScript**: Tipado estático
+- **Zustand**: Gestión de estado
+- **Firebase**: Autenticación y backend
+- **React Hook Form**: Manejo de formularios
+- **Yup**: Validación de esquemas
+- **Tailwind CSS**: Framework CSS
+- **Shadcn UI**: Componentes accesibles
+- **React Toastify**: Notificaciones
+
+### Desarrollo
+- **ESLint**: Linting de código
+- **Tailwind CSS**: PostCSS y configuración
+
+## 📖 Recursos Adicionales
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://react.dev/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Zustand Documentation](https://github.com/pmndrs/zustand)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
