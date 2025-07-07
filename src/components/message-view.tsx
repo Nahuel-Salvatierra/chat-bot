@@ -8,10 +8,10 @@ import LoaderBox from "./loader-box";
 import { useEffect, useRef } from "react";
 
 export default function MessageView() {
-  const newMessage = useMessageStore((state) => state.messages);
+  const messages = useMessageStore((state) => state.messages);
+  const loadMessage = useMessageStore((state) => state.updateOne);
   const { loading } = useGetMessages();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -21,13 +21,13 @@ export default function MessageView() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [newMessage]);
+  }, [messages, loadMessage]);
 
   return (
-    <div className="flex gap-2 w-full py-2 pb-4 overflow-y-auto max-h-[60vh]">
+    <div className="flex gap-2 w-full py-2 pb-4 overflow-y-auto ">
       <div className="flex flex-col gap-2 w-full">
         {loading && <LoaderBox />}
-        {newMessage.map((message) =>
+        {messages.map((message) =>
           message.role === "user" ? (
             <UserMessage key={message.createdAt} message={message} />
           ) : (
@@ -37,7 +37,6 @@ export default function MessageView() {
             />
           )
         )}
-        {/* Elemento invisible para scroll */}
         <div ref={messagesEndRef} />
       </div>
     </div>

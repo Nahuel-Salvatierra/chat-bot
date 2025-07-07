@@ -9,7 +9,7 @@ export default async function ChatPage() {
         <CardHeader>
           <CardTitle>Chat with IA Assistant</CardTitle>
         </CardHeader>
-        <CardContent className="overflow-y-auto self-center w-full max-w-2xl">
+        <CardContent className="overflow-y-auto  self-center w-full max-w-2xl">
           <MessageView />
           <MessageForm />
         </CardContent>
