@@ -1,4 +1,3 @@
-import { env } from "@/configuration/environments";
 import { Auth } from "@/domain/auth";
 import { useMessageStore } from "../store/message-store";
 import { useEffect, useState } from "react";
@@ -13,7 +12,7 @@ export const useGetMessages = () => {
       const token = await Auth.getToken();
       try {
         if (token) {
-          const messages = await fetch(`${env.baseUrl}/api/messages`, {
+          const messages = await fetch(`/api/messages`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
