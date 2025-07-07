@@ -61,5 +61,22 @@ export const useAuth = () => {
     }
   };
 
-  return { register: registerUser, login, logout };
+  const loginWithGoogle = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const user = await Auth.loginWithGoogle();
+      setUser({
+        email: user.email,
+      });
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Login with Google failed";
+      setError(errorMessage);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { register: registerUser, login, logout, loginWithGoogle };
 };

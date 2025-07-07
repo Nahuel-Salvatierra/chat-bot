@@ -14,7 +14,7 @@ export default function useLogin({
   onError?: () => void;
 }) {
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
 
   const {
     register: registerForm,
@@ -37,10 +37,24 @@ export default function useLogin({
     }
   });
 
+  const googleLogin = async () => {
+    try {
+      setLoading(true);
+      await loginWithGoogle();
+      onSuccess?.();
+    } catch (error: unknown) {
+      console.error(error);
+      onError?.();
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     validationErrors: errors,
     submit,
     registerForm,
     loading,
+    googleLogin,
   };
 }

@@ -40,4 +40,8 @@ export class Auth {
   static async getAuthUser() {
     return getAuth().getAuthUser();
   }
+
+  static async loginWithGoogle() {
+    return getAuth().loginWithGoogle();
+  }
 }

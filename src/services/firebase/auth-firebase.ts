@@ -2,6 +2,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { auth } from "./firebase-config";
 import { Auth } from "firebase/auth";
@@ -70,5 +72,12 @@ export class FirebaseAuth implements IAuth {
       throw new Error("Firebase Auth not initialized");
     }
     return auth.currentUser ? new User(auth.currentUser.email as string) : null;
+  }
+
+  async loginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    const userCredential = await signInWithPopup(auth as Auth, provider);
+    if (!userCredential.user.email) throw new Error("User email not found");
+    return new User(userCredential.user.email);
   }
 }

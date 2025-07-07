@@ -32,10 +32,11 @@ export function LoginForm({
     toast.error("Error logging in");
   };
 
-  const { submit, loading, registerForm, validationErrors } = useLogin({
-    onSuccess,
-    onError,
-  });
+  const { submit, loading, registerForm, validationErrors, googleLogin } =
+    useLogin({
+      onSuccess,
+      onError,
+    });
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -82,7 +83,11 @@ export function LoginForm({
                 <Button type="submit" className="w-full" loading={loading}>
                   Login
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={googleLogin}
+                >
                   Login with Google
                 </Button>
               </div>
