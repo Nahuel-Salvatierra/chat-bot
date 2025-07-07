@@ -1,3 +1,5 @@
+"use client";
+
 import { Auth } from "@/domain/auth";
 import { useMessageStore } from "../store/message-store";
 import { useEffect, useState } from "react";
