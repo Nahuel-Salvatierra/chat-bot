@@ -78,6 +78,8 @@ export function LoginForm({
                   Login
                 </Button>
                 <Button
+                  disabled={loading}
+                  type="button"
                   variant="outline"
                   className="w-full"
                   onClick={googleLogin}
