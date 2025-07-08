@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 export const useGetMessages = () => {
   const [loading, setLoading] = useState(false);
   const { addManyMessages } = useMessageStore((state) => state);
+
   useEffect(() => {
     const fetchMessages = async () => {
       setLoading(true);
