@@ -24,7 +24,11 @@ const AppContent = ({
 
   return (
     <>
-      <ToastContainer autoClose={3000} theme={theme} />
+      <ToastContainer
+        className="bg-background text-primary"
+        autoClose={3000}
+        theme={theme}
+      />
       {children}
     </>
   );
