@@ -11,7 +11,9 @@ export default function MessageView() {
   const messages = useMessageStore((state) => state.messages);
   const loadMessage = useMessageStore((state) => state.updateOne);
   const { loading } = useGetMessages();
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
